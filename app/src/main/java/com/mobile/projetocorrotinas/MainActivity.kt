@@ -45,7 +45,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// Possíveis estados do semáforo
 enum class EstadoSemaforo {
     VERDE,
     AMARELO,
@@ -55,32 +54,27 @@ enum class EstadoSemaforo {
 @Composable
 fun AplicativoSemaforo() {
 
-    // Guarda qual luz está ativa no momento
+
     var estadoAtual by remember {
         mutableStateOf(EstadoSemaforo.VERDE)
     }
 
-    // Guarda se o modo amarelo piscante está ativado
+
     var modoPiscante by remember {
         mutableStateOf(false)
     }
 
-    // No modo piscante, controla se a luz está acesa ou apagada
+
     var amareloAceso by remember {
         mutableStateOf(true)
     }
 
-    /*
-     * Aqui inicia uma corrotina.
-     *
-     * Sempre que modoPiscante mudar, a corrotina anterior será
-     * cancelada e uma nova será iniciada.
-     */
+
     LaunchedEffect(modoPiscante) {
 
         if (modoPiscante) {
 
-            // Modo amarelo piscante
+
             estadoAtual = EstadoSemaforo.AMARELO
             amareloAceso = true
 
@@ -91,7 +85,7 @@ fun AplicativoSemaforo() {
 
         } else {
 
-            // Funcionamento normal
+
             amareloAceso = false
 
             while (true) {
@@ -107,7 +101,7 @@ fun AplicativoSemaforo() {
         }
     }
 
-    // Define o texto apresentado na tela
+
     val textoEstado = if (modoPiscante) {
         if (amareloAceso) {
             "Amarelo piscante: aceso"
@@ -122,7 +116,7 @@ fun AplicativoSemaforo() {
         }
     }
 
-    // Interface do aplicativo
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFFF2F2F2)
@@ -143,7 +137,7 @@ fun AplicativoSemaforo() {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Estrutura externa do semáforo
+
             Column(
                 modifier = Modifier
                     .background(
@@ -154,7 +148,7 @@ fun AplicativoSemaforo() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                // Luz vermelha
+
                 LuzSemaforo(
                     cor = Color.Red,
                     acesa = !modoPiscante &&
@@ -163,7 +157,7 @@ fun AplicativoSemaforo() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Luz amarela
+
                 LuzSemaforo(
                     cor = Color.Yellow,
                     acesa = if (modoPiscante) {
@@ -175,7 +169,7 @@ fun AplicativoSemaforo() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Luz verde
+                
                 LuzSemaforo(
                     cor = Color.Green,
                     acesa = !modoPiscante &&
